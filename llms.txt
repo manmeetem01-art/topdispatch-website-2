@@ -15,44 +15,44 @@
 - Email: support@topdispatchcrm.com
 
 ## Services
-- [Virtual Receptionist](https://topdispatchcrm.com/services/virtual-receptionist/): Every call answered in your company's name by someone who knows your services, service area and prices.
-- [Dispatch Coordination](https://topdispatchcrm.com/services/dispatch/): Jobs go to the right technician, the tech gets the details and the customer hears when to expect them.
-- [After-Hours Answering](https://topdispatchcrm.com/services/after-hours-answering/): Evening, weekend and overnight calls answered by a person who follows your emergency rules.
-- [Appointment Setting](https://topdispatchcrm.com/services/appointment-setting/): Bookings made, confirmed and reminded, and unsold estimates chased while they're still warm.
-- [Cold Calling & Lead Gen](https://topdispatchcrm.com/services/cold-calling/): Outbound calls to prospects, past customers and lapsed maintenance plans that end with a visit booked.
-- [Back Office Management](https://topdispatchcrm.com/services/back-office-support/): Invoicing, data entry, email, CRM upkeep and document prep handled while you're in the field.
-- [Reporting & Analytics](https://topdispatchcrm.com/services/reporting-analytics/): Regular performance reports, job summaries and data so you always know how operations are running.
-- [Customer Support](https://topdispatchcrm.com/services/customer-support/): Questions, complaints and after-job check-ins handled before they turn into bad reviews.
+- [Virtual Receptionist](https://topdispatchcrm.com/services/virtual-receptionist): Every call answered in your company's name by someone who knows your services, service area and prices.
+- [Dispatch Coordination](https://topdispatchcrm.com/services/dispatch): Jobs go to the right technician, the tech gets the details and the customer hears when to expect them.
+- [After-Hours Answering](https://topdispatchcrm.com/services/after-hours-answering): Evening, weekend and overnight calls answered by a person who follows your emergency rules.
+- [Appointment Setting](https://topdispatchcrm.com/services/appointment-setting): Bookings made, confirmed and reminded, and unsold estimates chased while they're still warm.
+- [Cold Calling & Lead Gen](https://topdispatchcrm.com/services/cold-calling): Outbound calls to prospects, past customers and lapsed maintenance plans that end with a visit booked.
+- [Back Office Management](https://topdispatchcrm.com/services/back-office-support): Invoicing, data entry, email, CRM upkeep and document prep handled while you're in the field.
+- [Reporting & Analytics](https://topdispatchcrm.com/services/reporting-analytics): Regular performance reports, job summaries and data so you always know how operations are running.
+- [Customer Support](https://topdispatchcrm.com/services/customer-support): Questions, complaints and after-job check-ins handled before they turn into bad reviews.
 
 ## Industries
-- [HVAC answering service](https://topdispatchcrm.com/industries/hvac-answering-service/): Appointment setting, emergency dispatch, seasonal scheduling and technician routing for heating and cooling companies.
-- [Plumbing answering service](https://topdispatchcrm.com/industries/plumbing-answering-service/): Emergency call triaging, booking, dispatch management and CRM updates for plumbing companies of all sizes.
-- [Electrical answering service](https://topdispatchcrm.com/industries/electrician-answering-service/): Professional call handling and scheduling for residential and commercial electrical service companies.
-- [Locksmith answering service](https://topdispatchcrm.com/industries/locksmith-answering-service/): 24/7 emergency dispatching, call triage, job booking and follow-up for locksmith businesses.
-- [Roofing answering service](https://topdispatchcrm.com/industries/roofing-answering-service/): Leak calls, inspections, storm leads and estimate booking for roofing contractors.
-- [Garage Door answering service](https://topdispatchcrm.com/industries/garage-door-answering-service/): Emergency repair dispatching, installation scheduling and maintenance coordination for garage door companies.
-- [Pest Control answering service](https://topdispatchcrm.com/industries/pest-control-answering-service/): Recurring treatment scheduling, route support and new customer onboarding for pest control companies.
-- [Cleaning answering service](https://topdispatchcrm.com/industries/cleaning-business-answering-service/): Booking management, recurring schedule coordination and customer follow-ups for cleaning businesses.
-- [Landscaping answering service](https://topdispatchcrm.com/industries/landscaping-answering-service/): Seasonal scheduling, crew dispatch, quote follow-ups and customer relationship management for lawn and garden businesses.
-- [Construction & Contractors answering service](https://topdispatchcrm.com/industries/contractor-answering-service/): Project scheduling, contractor coordination, estimate follow-ups and client communication management.
-- [Security answering service](https://topdispatchcrm.com/industries/security-alarm-answering-service/): Alarm monitoring support coordination, installation scheduling and customer account management.
-- [Chimney answering service](https://topdispatchcrm.com/industries/chimney-answering-service/): Inspection scheduling, cleaning appointments and repair coordination for chimney service companies.
-- [Air Duct answering service](https://topdispatchcrm.com/industries/air-duct-cleaning-answering-service/): Cleaning appointment coordination, technician dispatch and follow-up management for air duct service businesses.
-- [Medical Spa answering service](https://topdispatchcrm.com/industries/medical-spa-answering-service/): Appointment booking, client intake coordination, follow-up scheduling and outreach for medical spa businesses.
+- [HVAC answering service](https://topdispatchcrm.com/industries/hvac-answering-service): Appointment setting, emergency dispatch, seasonal scheduling and technician routing for heating and cooling companies.
+- [Plumbing answering service](https://topdispatchcrm.com/industries/plumbing-answering-service): Emergency call triaging, booking, dispatch management and CRM updates for plumbing companies of all sizes.
+- [Electrical answering service](https://topdispatchcrm.com/industries/electrician-answering-service): Professional call handling and scheduling for residential and commercial electrical service companies.
+- [Locksmith answering service](https://topdispatchcrm.com/industries/locksmith-answering-service): 24/7 emergency dispatching, call triage, job booking and follow-up for locksmith businesses.
+- [Roofing answering service](https://topdispatchcrm.com/industries/roofing-answering-service): Leak calls, inspections, storm leads and estimate booking for roofing contractors.
+- [Garage Door answering service](https://topdispatchcrm.com/industries/garage-door-answering-service): Emergency repair dispatching, installation scheduling and maintenance coordination for garage door companies.
+- [Pest Control answering service](https://topdispatchcrm.com/industries/pest-control-answering-service): Recurring treatment scheduling, route support and new customer onboarding for pest control companies.
+- [Cleaning answering service](https://topdispatchcrm.com/industries/cleaning-business-answering-service): Booking management, recurring schedule coordination and customer follow-ups for cleaning businesses.
+- [Landscaping answering service](https://topdispatchcrm.com/industries/landscaping-answering-service): Seasonal scheduling, crew dispatch, quote follow-ups and customer relationship management for lawn and garden businesses.
+- [Construction & Contractors answering service](https://topdispatchcrm.com/industries/contractor-answering-service): Project scheduling, contractor coordination, estimate follow-ups and client communication management.
+- [Security answering service](https://topdispatchcrm.com/industries/security-alarm-answering-service): Alarm monitoring support coordination, installation scheduling and customer account management.
+- [Chimney answering service](https://topdispatchcrm.com/industries/chimney-answering-service): Inspection scheduling, cleaning appointments and repair coordination for chimney service companies.
+- [Air Duct answering service](https://topdispatchcrm.com/industries/air-duct-cleaning-answering-service): Cleaning appointment coordination, technician dispatch and follow-up management for air duct service businesses.
+- [Medical Spa answering service](https://topdispatchcrm.com/industries/medical-spa-answering-service): Appointment booking, client intake coordination, follow-up scheduling and outreach for medical spa businesses.
 
 ## Company
-- [About](https://topdispatchcrm.com/about/)
-- [How it works](https://topdispatchcrm.com/how-it-works/)
-- [Pricing](https://topdispatchcrm.com/pricing/)
-- [Why the Philippines](https://topdispatchcrm.com/why-the-philippines/)
-- [Reviews](https://topdispatchcrm.com/reviews/)
-- [FAQ](https://topdispatchcrm.com/faq/)
-- [Contact](https://topdispatchcrm.com/contact/)
+- [About](https://topdispatchcrm.com/about)
+- [How it works](https://topdispatchcrm.com/how-it-works)
+- [Pricing](https://topdispatchcrm.com/pricing)
+- [Why the Philippines](https://topdispatchcrm.com/why-the-philippines)
+- [Reviews](https://topdispatchcrm.com/reviews)
+- [FAQ](https://topdispatchcrm.com/faq)
+- [Contact](https://topdispatchcrm.com/contact)
 
 ## Guides
-- [How Much Does an Answering Service Cost? (2026 Guide for Home Services)](https://topdispatchcrm.com/guides/answering-service-cost/)
-- [AI Receptionist vs. Human Receptionist for Home Services](https://topdispatchcrm.com/guides/ai-receptionist-vs-human-receptionist/)
-- [How to Hire a Virtual Receptionist for Your Home Service Business](https://topdispatchcrm.com/guides/how-to-hire-a-virtual-receptionist/)
+- [How Much Does an Answering Service Cost? (2026 Guide for Home Services)](https://topdispatchcrm.com/guides/answering-service-cost)
+- [AI Receptionist vs. Human Receptionist for Home Services](https://topdispatchcrm.com/guides/ai-receptionist-vs-human-receptionist)
+- [How to Hire a Virtual Receptionist for Your Home Service Business](https://topdispatchcrm.com/guides/how-to-hire-a-virtual-receptionist)
 
 ## Frequently asked questions
 - Q: What does Top Dispatch do?
