@@ -1,1 +1,166 @@
-{"cleanUrls":true,"trailingSlash":false,"rewrites":[{"source":"/industries/electrician-answering-service","destination":"/industries-electrician-answering-service"},{"source":"/industries/air-duct-cleaning-answering-service","destination":"/industries-air-duct-cleaning-answering-service"},{"source":"/industries/pest-control-answering-service","destination":"/industries-pest-control-answering-service"},{"source":"/industries/hvac-answering-service","destination":"/industries-hvac-answering-service"},{"source":"/industries/chimney-answering-service","destination":"/industries-chimney-answering-service"},{"source":"/industries/security-alarm-answering-service","destination":"/industries-security-alarm-answering-service"},{"source":"/industries/locksmith-answering-service","destination":"/industries-locksmith-answering-service"},{"source":"/industries/roofing-answering-service","destination":"/industries-roofing-answering-service"},{"source":"/industries/landscaping-answering-service","destination":"/industries-landscaping-answering-service"},{"source":"/industries/cleaning-business-answering-service","destination":"/industries-cleaning-business-answering-service"},{"source":"/industries/medical-spa-answering-service","destination":"/industries-medical-spa-answering-service"},{"source":"/industries/garage-door-answering-service","destination":"/industries-garage-door-answering-service"},{"source":"/industries/contractor-answering-service","destination":"/industries-contractor-answering-service"},{"source":"/industries/plumbing-answering-service","destination":"/industries-plumbing-answering-service"},{"source":"/services/appointment-setting","destination":"/services-appointment-setting"},{"source":"/services/after-hours-answering","destination":"/services-after-hours-answering"},{"source":"/services/customer-support","destination":"/services-customer-support"},{"source":"/services/dispatch","destination":"/services-dispatch"},{"source":"/services/back-office-support","destination":"/services-back-office-support"},{"source":"/services/reporting-analytics","destination":"/services-reporting-analytics"},{"source":"/services/virtual-receptionist","destination":"/services-virtual-receptionist"},{"source":"/services/cold-calling","destination":"/services-cold-calling"},{"source":"/guides/answering-service-cost","destination":"/guides-answering-service-cost"},{"source":"/guides/how-to-hire-a-virtual-receptionist","destination":"/guides-how-to-hire-a-virtual-receptionist"},{"source":"/guides/ai-receptionist-vs-human-receptionist","destination":"/guides-ai-receptionist-vs-human-receptionist"}],"redirects":[{"source":"/ServicesPage","destination":"/services","permanent":true},{"source":"/AboutPage","destination":"/about","permanent":true},{"source":"/ReviewsPage","destination":"/reviews","permanent":true},{"source":"/FAQPage","destination":"/faq","permanent":true},{"source":"/IndustriesPage","destination":"/industries","permanent":true},{"source":"/ContactPage","destination":"/contact","permanent":true}],"headers":[{"source":"/(.*)\\.(png|ico|css|js)","headers":[{"key":"Cache-Control","value":"public, max-age=86400"}]},{"source":"/(.*)","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},{"key":"X-Frame-Options","value":"SAMEORIGIN"}]}]}
+{
+ "cleanUrls": true,
+ "trailingSlash": false,
+ "rewrites": [
+  {
+   "source": "/industries/electrician-answering-service",
+   "destination": "/industries-electrician-answering-service"
+  },
+  {
+   "source": "/industries/air-duct-cleaning-answering-service",
+   "destination": "/industries-air-duct-cleaning-answering-service"
+  },
+  {
+   "source": "/industries/pest-control-answering-service",
+   "destination": "/industries-pest-control-answering-service"
+  },
+  {
+   "source": "/industries/hvac-answering-service",
+   "destination": "/industries-hvac-answering-service"
+  },
+  {
+   "source": "/industries/chimney-answering-service",
+   "destination": "/industries-chimney-answering-service"
+  },
+  {
+   "source": "/industries/security-alarm-answering-service",
+   "destination": "/industries-security-alarm-answering-service"
+  },
+  {
+   "source": "/industries/locksmith-answering-service",
+   "destination": "/industries-locksmith-answering-service"
+  },
+  {
+   "source": "/industries/roofing-answering-service",
+   "destination": "/industries-roofing-answering-service"
+  },
+  {
+   "source": "/industries/landscaping-answering-service",
+   "destination": "/industries-landscaping-answering-service"
+  },
+  {
+   "source": "/industries/cleaning-business-answering-service",
+   "destination": "/industries-cleaning-business-answering-service"
+  },
+  {
+   "source": "/industries/medical-spa-answering-service",
+   "destination": "/industries-medical-spa-answering-service"
+  },
+  {
+   "source": "/industries/garage-door-answering-service",
+   "destination": "/industries-garage-door-answering-service"
+  },
+  {
+   "source": "/industries/contractor-answering-service",
+   "destination": "/industries-contractor-answering-service"
+  },
+  {
+   "source": "/industries/plumbing-answering-service",
+   "destination": "/industries-plumbing-answering-service"
+  },
+  {
+   "source": "/services/appointment-setting",
+   "destination": "/services-appointment-setting"
+  },
+  {
+   "source": "/services/after-hours-answering",
+   "destination": "/services-after-hours-answering"
+  },
+  {
+   "source": "/services/customer-support",
+   "destination": "/services-customer-support"
+  },
+  {
+   "source": "/services/dispatch",
+   "destination": "/services-dispatch"
+  },
+  {
+   "source": "/services/back-office-support",
+   "destination": "/services-back-office-support"
+  },
+  {
+   "source": "/services/reporting-analytics",
+   "destination": "/services-reporting-analytics"
+  },
+  {
+   "source": "/services/virtual-receptionist",
+   "destination": "/services-virtual-receptionist"
+  },
+  {
+   "source": "/services/cold-calling",
+   "destination": "/services-cold-calling"
+  },
+  {
+   "source": "/guides/answering-service-cost",
+   "destination": "/guides-answering-service-cost"
+  },
+  {
+   "source": "/guides/how-to-hire-a-virtual-receptionist",
+   "destination": "/guides-how-to-hire-a-virtual-receptionist"
+  },
+  {
+   "source": "/guides/ai-receptionist-vs-human-receptionist",
+   "destination": "/guides-ai-receptionist-vs-human-receptionist"
+  }
+ ],
+ "redirects": [
+  {
+   "source": "/ServicesPage",
+   "destination": "/services",
+   "permanent": true
+  },
+  {
+   "source": "/AboutPage",
+   "destination": "/about",
+   "permanent": true
+  },
+  {
+   "source": "/ReviewsPage",
+   "destination": "/reviews",
+   "permanent": true
+  },
+  {
+   "source": "/FAQPage",
+   "destination": "/faq",
+   "permanent": true
+  },
+  {
+   "source": "/IndustriesPage",
+   "destination": "/industries",
+   "permanent": true
+  },
+  {
+   "source": "/ContactPage",
+   "destination": "/contact",
+   "permanent": true
+  }
+ ],
+ "headers": [
+  {
+   "source": "/(.*)\\.(png|ico|css|js)",
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "public, max-age=86400"
+    }
+   ]
+  },
+  {
+   "source": "/(.*)",
+   "headers": [
+    {
+     "key": "X-Content-Type-Options",
+     "value": "nosniff"
+    },
+    {
+     "key": "Referrer-Policy",
+     "value": "strict-origin-when-cross-origin"
+    },
+    {
+     "key": "X-Frame-Options",
+     "value": "SAMEORIGIN"
+    }
+   ]
+  }
+ ]
+}
