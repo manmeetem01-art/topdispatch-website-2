@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
-import json, os, html, datetime
+import json, os, html, datetime, shutil
 from content import *
+from deep_services import SD
+from deep_industries import ID
 
-OUT = "/home/claude/site"
+import pathlib
+HERE = pathlib.Path(__file__).resolve().parent
+OUT = str(HERE / "_site")
 TODAY = "2026-10-20"
 E = html.escape
 
@@ -145,7 +149,7 @@ def footer():
  <div class="wrap">
   <div class="foot">
    <div><img src="/assets/logo-96.png" alt="" width="44" height="44" loading="lazy"><p>Professional virtual secretaries, receptionists and dispatchers for US home service businesses. Founded 2023.</p></div>
-   <div><h2>Services</h2><ul>{svc}</ul></div>
+   <div><h2>Services</h2><ul><li><a href="/call-center-services/">Call center services</a></li><li><a href="/answering-service/">24/7 answering service</a></li>{svc}</ul></div>
    <div><h2>Industries</h2><ul>{ind}<li><a href="/industries/">All industries</a></li></ul></div>
    <div><h2>Company</h2><ul><li><a href="/about/">About us</a></li><li><a href="/how-it-works/">How it works</a></li><li><a href="/why-the-philippines/">Why the Philippines</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/reviews/">Client reviews</a></li><li><a href="/guides/">Guides</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Leave details</a></li></ul></div>
    <div><h2>Contact</h2><ul>
@@ -270,6 +274,7 @@ def home():
 <section class="section bg-3"><div class="wrap">
  <div class="head"><h2>What We Do</h2><p>Our virtual secretaries are trained across the most in-demand service roles for US home service businesses.</p></div>
  <div class="svc-grid">{"".join(svc_card(s) for s in SERVICES)}</div>
+ <div class="links mt-l"><a href="/call-center-services/">Outsourced call center services</a><a href="/answering-service/">24/7 answering service</a><a href="/services/">All services</a></div>
 </div></section>
 
 <section class="section"><div class="wrap">
@@ -337,7 +342,7 @@ def services_hub():
     rows = "".join(f'''<article class="card tint row-card {s["tint"]}"><div class="ic">{I(s["icon"])}</div><div style="flex:1"><h3><a href="/services/{s["slug"]}/">{s["name"]}</a></h3><p>{s["short"]}</p>{checks(s["includes"][:6])}<a class="more" href="/services/{s["slug"]}/">Explore {s["name"].lower()} {I("arrow")}</a></div></article>''' for s in SERVICES)
     body = hero_sub("sparkles","Everything You Need","Our","Services","Comprehensive virtual staffing solutions designed specifically for US home service businesses.",[("Home","/"),("Services","/services/")]) + \
       answer_box("What services does Top Dispatch offer?","Top Dispatch provides eight remote staffing services for US home service companies: virtual receptionist, dispatch coordination, after-hours answering, appointment setting, cold calling and lead generation, back-office management, reporting and analytics, and customer support. Each is delivered by one dedicated, trained secretary who works your hours inside your existing software.", FACTS) + \
-      f'<section class="section-tight"><div class="wrap stack">{rows}</div></section>' + \
+      f'<section class="section-tight"><div class="wrap"><div class="links"><a href="/call-center-services/">Outsourced call center services</a><a href="/answering-service/">24/7 answering service</a></div></div></section><section class="section-tight"><div class="wrap stack">{rows}</div></section>' + \
       cta("Ready to Get Started?","Let us match you with the perfect virtual secretary for your business.")
     ld = [{"@type":"ItemList","name":"Top Dispatch services","itemListElement":[{"@type":"ListItem","position":i+1,"url":f'{DOMAIN}/services/{s["slug"]}/',"name":s["name"]} for i,s in enumerate(SERVICES)]}]
     page("/services/","Receptionist, Dispatch & Back-Office Services | Top Dispatch",
@@ -357,17 +362,44 @@ def service_page(s):
  <div><h2 style="font-size:1.5rem;margin-bottom:18px">A sample shift</h2><div class="log">{log}</div><p class="muted mt-s" style="font-size:.78rem">Illustrative examples of the call types a {s["name"].lower()} specialist handles.</p></div>
 </div></section>
 <section class="section bg-2"><div class="wrap"><div class="head"><h2>How {s["name"]} Works</h2><p>From sign-up to first shift in 48 to 72 hours for most clients.</p></div><div class="grid g3 steps">{hw}</div></div></section>
+{svc_deep(s)}
 <section class="section"><div class="wrap"><div class="head"><h2>Built for Your Trade</h2><p>{s["name"]} for the home service industries we know best.</p></div>
  <div class="links">{"".join(f'<a href="/industries/{i["slug"]}/">{i["name"]}</a>' for i in INDUSTRIES)}</div></div></section>
-<section class="section bg-2"><div class="wrap"><div class="head"><h2>{s["name"]} FAQ</h2><p>Straight answers to the questions owners ask most.</p></div>{faq_block(s["faqs"])}</div></section>
+<section class="section bg-2"><div class="wrap"><div class="head"><h2>{s["name"]} FAQ</h2><p>Straight answers to the questions owners ask most.</p></div>{faq_block(s["faqs"]+SD[s["slug"]]["extra_faqs"])}</div></section>
 <section class="section"><div class="wrap"><div class="head"><h2>Pair It With</h2><p>Most clients combine two or three roles in one secretary's day.</p></div><div class="svc-grid">{"".join(svc_card(x) for x in others)}</div></div></section>
 ''' + cta(f"Get a Dedicated {s['name']} Specialist","Tell us what you need covered. You interview your match before they start, and most clients are live in 48 to 72 hours.")
     ld = [{"@type":"Service","@id":DOMAIN+path+"#service","name":s["name"],"serviceType":s["name"],"description":s["answer"],"url":DOMAIN+path,
            "provider":{"@id":DOMAIN+"/#org"},"areaServed":{"@type":"Country","name":"United States"},
            "audience":{"@type":"BusinessAudience","audienceType":"Home service businesses"},
            "offers":{"@type":"Offer","priceSpecification":{"@type":"PriceSpecification","priceCurrency":"USD","description":"Flat monthly fee based on hours and scope. No setup fees."},"availability":"https://schema.org/InStock"}},
-          faq_ld(s["faqs"])]
+          faq_ld(s["faqs"]+SD[s["slug"]]["extra_faqs"])]
     page(path, s["title"], s["meta"], body, "Services", ld, cr)
+
+
+def svc_deep(s):
+    d=SD[s["slug"]]
+    why="".join(f"<p>{p}</p>" for p in d["why"][1])
+    pb="".join(f'<div class="log-item {s["tint"]}"><div><div class="k">Step {k+1}</div></div><div><p><strong>{E(t)}</strong></p><p class="out">{E(x)}</p></div></div>' for k,(t,x) in enumerate(d["playbook"][2]))
+    kp="".join(f'<tr><th scope="row">{E(m)}</th><td>{E(x)}</td></tr>' for m,x in d["kpis"])
+    pf="".join(f'<div class="card {s["tint"]}"><h3 style="margin-top:0">{E(t)}</h3><p>{E(x)}</p></div>' for t,x in d["pitfalls"][1])
+    return f"""<section class="section"><div class="narrow prose"><h2>{d["why"][0]}</h2>{why}</div></section>
+<section class="section bg-2"><div class="wrap split" style="align-items:start">
+ <div class="prose"><h2>{d["playbook"][0]}</h2><p>{d["playbook"][1]}</p><h3>What we need from you</h3>{checks(d["provide"],True)}</div>
+ <div class="log">{pb}</div></div></section>
+<section class="section"><div class="wrap"><div class="head"><h2>How We Measure {s["name"]}</h2><p>You see these numbers in your regular summary, so you can judge the service on results.</p></div>
+ <div class="table-wrap" style="max-width:860px;margin:0 auto"><table style="min-width:520px"><thead><tr><th scope="col">Metric</th><th scope="col">What it tells you</th></tr></thead><tbody>{kp}</tbody></table></div></div></section>
+<section class="section bg-2"><div class="wrap"><div class="head"><h2>{d["pitfalls"][0]}</h2></div><div class="grid g2">{pf}</div></div></section>"""
+
+def ind_deep(i,label):
+    d=ID[i["slug"]]
+    why="".join(f"<p>{p}</p>" for p in d["why"])
+    em="".join(f'<tr><th scope="row" style="white-space:normal">{E(t)}</th><td>{E(a)}</td></tr>' for t,a in d["emerg"])
+    return f"""<section class="section bg-2"><div class="narrow prose"><h2>Why {label} Calls Need a Specialist</h2>{why}</div></section>
+<section class="section"><div class="wrap split" style="align-items:start">
+ <div class="prose"><h2>Intake Questions We Ask</h2><p>Your receptionist works from {art(label)} {lc(label)} intake script you approve. These are the questions most {lc(label)} owners start with:</p><ol>{"".join(f"<li>{E(q)}</li>" for q in d["intake"])}</ol></div>
+ <div><h2 style="font-size:1.6rem;margin-bottom:16px">Sample Emergency Rules</h2><div class="table-wrap"><table style="min-width:420px"><thead><tr><th scope="col">When the caller reports</th><th scope="col">Your receptionist</th></tr></thead><tbody>{em}</tbody></table></div><p class="muted mt-s" style="font-size:.8rem">You set the final rules during onboarding. These are starting examples.</p>
+ <h3 class="mt-m" style="font-size:1.2rem">{d["season"][0]}</h3><p>{d["season"][1]}</p></div>
+</div></section>"""
 
 # ================= INDUSTRIES =================
 def industries_hub():
@@ -403,14 +435,15 @@ def industry_page(i):
   <div class="log-item {i["tint"]}"><div><div class="k">Outcome</div></div><div><p class="out" style="margin:0"><span class="pill">Handled</span>{outcome}</p></div></div></div>
   <p class="muted mt-s" style="font-size:.78rem;margin-bottom:0">Works inside the software you already run, including {i["software"]}.</p></div>
 </div></section>
+{ind_deep(i,label)}
 <section class="section bg-2"><div class="wrap"><div class="head"><h2>What Your {label} Secretary Takes Off Your Plate</h2><p>Start with the phones. Add dispatch, follow-ups and admin as you grow.</p></div><div class="svc-grid">{"".join(svc_card(s) for s in SERVICES[:6])}</div></div></section>
 <section class="section"><div class="wrap"><div class="head"><h2>How It Works</h2><p>Live in 48 to 72 hours with a secretary who has worked in {lc(label)}.</p></div>{steps_block()}</div></section>
-<section class="section bg-2"><div class="wrap"><div class="head"><h2>{label} Answering Service FAQ</h2><p>What {lc(label)} owners ask before they sign up.</p></div>{faq_block(i["faqs"])}</div></section>
+<section class="section bg-2"><div class="wrap"><div class="head"><h2>{label} Answering Service FAQ</h2><p>What {lc(label)} owners ask before they sign up.</p></div>{faq_block(i["faqs"]+ID[i["slug"]]["extra_faqs"])}</div></section>
 <section class="section-tight"><div class="wrap"><div class="head" style="margin-bottom:24px"><h2 style="font-size:1.6rem">Other Trades We Support</h2></div><div class="links">{"".join(f'<a href="/industries/{x["slug"]}/">{x["name"]}</a>' for x in rel)}<a href="/industries/">All industries</a></div></div></section>
 ''' + cta(f"Hand Over Your {label} Phones","We match you with a secretary who has worked in your trade. You interview them first.")
     ld = [{"@type":"Service","name":f"{label} answering service","serviceType":"Answering service and remote dispatch","description":i["answer"],"url":DOMAIN+path,
            "provider":{"@id":DOMAIN+"/#org"},"areaServed":{"@type":"Country","name":"United States"},
-           "audience":{"@type":"BusinessAudience","audienceType":f"{label} businesses"}}, faq_ld(i["faqs"])]
+           "audience":{"@type":"BusinessAudience","audienceType":f"{label} businesses"}}, faq_ld(i["faqs"]+ID[i["slug"]]["extra_faqs"])]
     page(path, i["title"], i["meta"], body, "Industries", ld, cr)
 
 # ================= ABOUT =================
@@ -718,6 +751,10 @@ Sitemap: {DOMAIN}/sitemap.xml
 ## Industries
 {ind}
 
+## Buyer guides
+- [Outsourced call center services]({DOMAIN}/call-center-services/)
+- [24/7 answering service]({DOMAIN}/answering-service/)
+
 ## Company
 - [About]({DOMAIN}/about/)
 - [How it works]({DOMAIN}/how-it-works/)
@@ -741,9 +778,102 @@ Sitemap: {DOMAIN}/sitemap.xml
       "headers":[{"source":"/assets/(.*)","headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}]},
                  {"source":"/(.*)","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},{"key":"X-Frame-Options","value":"SAMEORIGIN"}]}]},indent=1))
 
+# -*- coding: utf-8 -*-
+
+def landing(path, crumb, icon, badge, h1a, h1b, lead, title, meta, q, ans, sections, table, faqs, cta_h, cta_p):
+    cr=[("Home","/"),(crumb,path)]
+    secs=""
+    for k,(h,body) in enumerate(sections):
+        secs+=f'<section class="section{" bg-2" if k%2==0 else ""}"><div class="narrow prose"><h2>{h}</h2>{body}</div></section>'
+    body = hero_sub(icon,badge,h1a,h1b,lead,cr,extra=f'<div class="actions">{btn("Get a quote")}<span class="phone">or call <a href="tel:{PHONE_E164}">{PHONE}</a></span></div>') + \
+      answer_box(q,ans,FACTS) + secs + \
+      f'<section class="section"><div class="wrap"><div class="head"><h2>{table[0]}</h2><p>{table[1]}</p></div>{compare_table()}</div></section>' + \
+      f'<section class="section bg-2"><div class="wrap"><div class="head"><h2>Services Included</h2><p>Start with one, add the rest as you grow. All handled by the same dedicated person.</p></div><div class="svc-grid">{"".join(svc_card(s) for s in SERVICES)}</div></div></section>' + \
+      f'<section class="section"><div class="wrap"><div class="head"><h2>Industries We Staff</h2></div><div class="links">{"".join(f"<a href=\"/industries/{i["slug"]}/\">{i["name"]}</a>" for i in INDUSTRIES)}</div></div></section>' + \
+      f'<section class="section bg-2"><div class="wrap"><div class="head"><h2>Frequently Asked Questions</h2></div>{faq_block(faqs)}</div></section>' + \
+      cta(cta_h,cta_p)
+    ld=[{"@type":"Service","name":h1a+" "+h1b,"serviceType":crumb,"description":ans,"url":DOMAIN+path,"provider":{"@id":DOMAIN+"/#org"},
+         "areaServed":{"@type":"Country","name":"United States"},"audience":{"@type":"BusinessAudience","audienceType":"Small and home service businesses"}},faq_ld(faqs)]
+    page(path,title,meta,body,"Services",ld,cr)
+
+def call_center():
+    landing("/call-center-services/","Call Center Services","headphones","Outsourced Call Center",
+     "Outsourced Call Center","for Small Businesses",
+     "A dedicated call center agent for your business, not a seat in a shared pool. Inbound calls, outbound follow-up and dispatch handled by one trained person in your time zone.",
+     "Outsourced Call Center Services for Small Business | Top Dispatch",
+     "Outsourced call center services for US small and home service businesses: a dedicated agent for inbound calls, outbound follow-up and dispatch. Flat monthly fee, no contract.",
+     "What are outsourced call center services for a small business?",
+     "Outsourced call center services let a small business hand its inbound and outbound phone work to an external team instead of hiring in-house. With Top Dispatch, that team is one dedicated, trained agent based in the Philippines who answers in your company name, books and dispatches jobs, makes follow-up calls and works your US business hours for a flat monthly fee.",
+     [("Why small businesses outsource their call center",
+       "<p>Large companies run call centers because volume justifies it. Small businesses face the same problem at a smaller scale: calls come in while everyone is busy, follow-ups slip and the owner ends up answering the phone at night. Hiring a full-time local employee for the phones is expensive, slow and hard to cover for sickness and holidays.</p>"
+       "<p>An outsourced call center solves the coverage problem without the overhead. Traditional providers do this with a pool of agents answering many companies' lines from one script. That works for simple message-taking, but it breaks down when callers need real answers, quotes or a booked appointment.</p>"
+       "<p>Top Dispatch takes a different approach. You get one dedicated agent who learns your business, so the service behaves like your own call center team, just located remotely.</p>"),
+      ("Inbound and outbound in one role",
+       "<p><strong>Inbound:</strong> new-customer calls, existing customers, quotes, bookings, rescheduling, billing questions, after-hours emergencies and overflow when your office line is busy.</p>"
+       "<p><strong>Outbound:</strong> estimate follow-up, appointment confirmations, maintenance reminders, reactivating past customers, renewing service plans and commercial prospecting.</p>"
+       "<p>Because the same person handles both, they know each customer's history. A follow-up call can reference the quote they gave last Tuesday. A returning customer doesn't have to explain themselves again.</p>"),
+      ("Dedicated agent vs. shared call center",
+       "<p>A shared call center typically charges per minute or per call, and the agent who answers changes every time. Scripts are generic, and agents can't easily work inside your scheduling software. It suits low volume and simple message-taking.</p>"
+       "<p>A dedicated agent costs a flat monthly fee. The same person answers every shift, learns your price sheet and technicians, logs in to your CRM, and can book, dispatch and follow up. For businesses with steady daily calls, this usually delivers far more booked work per dollar.</p>"),
+      ("How to choose a call center partner",
+       "<ul><li><strong>Will I have the same agent every day?</strong> Consistency is what lets an agent learn your business.</li>"
+       "<li><strong>Can I interview them first?</strong> You should hear the voice that will represent your company.</li>"
+       "<li><strong>Will they work in my software?</strong> Booking directly into your system avoids double entry and missed jobs.</li>"
+       "<li><strong>How is pricing calculated?</strong> Per-minute pricing rises with volume. Flat monthly pricing doesn't.</li>"
+       "<li><strong>Is there a long-term contract?</strong> Month-to-month terms keep the provider accountable.</li>"
+       "<li><strong>What happens when the agent is sick?</strong> A briefed backup should cover the line.</li></ul>"
+       "<p>Top Dispatch answers yes to the first three, charges a flat monthly fee, runs month to month and provides backup cover.</p>"),
+      ("Why our call center agents are in the Philippines",
+       "<p>The Philippines has one of the world's largest English-speaking customer service workforces, with deep experience serving American customers. Agents work the Philippine night shift to cover your US day, in Eastern, Central, Mountain or Pacific time. <a href=\"/why-the-philippines/\">More on why the Philippines</a>.</p>")],
+     ("How a Dedicated Agent Compares","The four common ways small businesses cover their phones."),
+     [("How much does an outsourced call center cost?","Top Dispatch charges a flat monthly fee based on the hours and tasks you need. There are no setup fees or per-minute charges. See <a href=\"/pricing/\">pricing</a> or ask for a quote."),
+      ("Is this a shared call center?","No. You get one dedicated agent who works on your account, not a pool of agents answering many businesses."),
+      ("Can the agent make outbound calls?","Yes. Follow-ups, confirmations, reminders and reactivation calls can be combined with inbound work."),
+      ("What hours can the call center cover?","Your business hours in your US time zone, plus evenings, weekends or overnight if you need them."),
+      ("How fast can we start?","Most clients are live in 48 to 72 hours after signing up and interviewing their agent."),
+      ("Do you only work with home service businesses?","Home services are our specialty, including HVAC, plumbing, electrical, roofing and more. Tell us about your business and we'll confirm fit."),
+      ("Can the agent use our CRM?","Yes. Your agent logs in to your CRM, phone system and scheduling software as a user."),
+      ("Is there a contract?","No long-term contract. Service is month to month with 30 days' notice.")],
+     "Get Your Own Call Center Agent","Tell us what you need covered. Interview your match, and go live in 48 to 72 hours.")
+
+def answering():
+    landing("/answering-service/","Answering Service","phone","Live Answering, 24/7",
+     "24/7 Answering Service","for Small Businesses",
+     "Every call answered live by a trained person in your company's name, day, night and weekend. Jobs booked, emergencies dispatched and messages that actually get acted on.",
+     "24/7 Answering Service for Small Business | Top Dispatch",
+     "A live 24/7 answering service for US small and home service businesses. A dedicated person answers in your name, books jobs and dispatches emergencies. Flat monthly fee.",
+     "What is a 24/7 answering service?",
+     "A 24/7 answering service answers your business phone live at any hour, so callers reach a person instead of voicemail. Top Dispatch provides a dedicated, trained receptionist who answers in your company name, books appointments into your software, follows your emergency rules after hours and sends you a summary of every call.",
+     [("Why live answering beats voicemail",
+       "<p>Most callers who reach voicemail don't leave a message. They hang up and call the next business on the list. For service businesses, that next business often gets the job, the review and the repeat customer.</p>"
+       "<p>Live answering keeps those callers. A trained person confirms you can help, gives them a next step and books the work, which is what the caller wanted in the first place.</p>"),
+      ("Message-taking vs. a receptionist who books",
+       "<p>Traditional answering services take a message and pass it on. You still have to call back, by which time the caller may have booked elsewhere.</p>"
+       "<p>A Top Dispatch receptionist goes further. They check your service area, quote what you allow, book the slot in your calendar and tell the customer what happens next. Messages are only for the calls that genuinely need you.</p>"),
+      ("Business hours, after hours and overflow",
+       "<p><strong>Business hours:</strong> your receptionist is your front desk, answering every call and handling bookings and questions.</p>"
+       "<p><strong>After hours:</strong> nights and weekends are covered with triage based on your rules. Emergencies reach your on-call tech, and everything else is booked for the morning.</p>"
+       "<p><strong>Overflow:</strong> when your office line is busy, calls roll to your receptionist instead of voicemail.</p>"
+       "<p>You can choose any combination. See <a href=\"/services/after-hours-answering/\">after-hours answering</a> for how night calls are handled.</p>"),
+      ("What to look for in an answering service",
+       "<ul><li>A live person, not an automated menu</li><li>Your company name in the greeting</li><li>Ability to book appointments, not just take messages</li><li>Clear emergency rules and on-call paging</li><li>Flat, predictable pricing</li><li>No long-term contract</li></ul>"
+       "<p>For a detailed comparison of pricing models, read <a href=\"/guides/answering-service-cost/\">how much an answering service costs</a>.</p>")],
+     ("Answering Service Options Compared","Shared services, AI and in-house staff against a dedicated receptionist."),
+     [("Is the answering service really 24/7?","Coverage is built around the hours you choose, up to 24 hours a day, 7 days a week, including holidays."),
+      ("Will callers hear my business name?","Yes. Your receptionist answers with your exact greeting."),
+      ("Can the answering service book appointments?","Yes. Your receptionist books directly into your calendar or field-service software."),
+      ("How are emergencies handled at night?","Your receptionist follows the emergency rules you set and pages your on-call technician only for genuine emergencies."),
+      ("Do you charge per minute?","No. Top Dispatch charges a flat monthly fee based on the hours covered."),
+      ("Can I use the service only for overflow?","Yes. Calls your office can't answer roll over to your receptionist."),
+      ("How do I get messages?","Through a call summary by email or text, and notes in your CRM."),
+      ("How quickly can it start?","Most clients are live within 48 to 72 hours.")],
+     "Never Send a Caller to Voicemail Again","A dedicated person answers every call in your name. Month to month, live in 48 to 72 hours.")
+
+
 if __name__=="__main__":
+    shutil.rmtree(OUT, ignore_errors=True); os.makedirs(OUT+"/assets"); [shutil.copy(str(HERE/"assets"/f), OUT+"/assets/") for f in os.listdir(HERE/"assets")]; shutil.copy(str(HERE/"assets"/"favicon.ico"), OUT+"/favicon.ico")
     home(); services_hub(); [service_page(s) for s in SERVICES]
     industries_hub(); [industry_page(i) for i in INDUSTRIES]
     about(); reviews(); faq_page(); contact(); pricing(); how(); why()
-    guides_hub(); [guide_page(g) for g in GUIDES]; build_legal(); not_found(); extras()
+    guides_hub(); [guide_page(g) for g in GUIDES]; call_center(); answering(); build_legal(); not_found(); extras()
     print(len(SITEMAP),"pages")
