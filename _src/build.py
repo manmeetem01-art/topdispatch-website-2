@@ -3,6 +3,7 @@ import json, os, html, datetime, shutil
 from content import *
 from deep_services import SD
 from deep_industries import ID
+from links import autolink, sources_box, SERVICE_SOURCES, INDUSTRY_SOURCES, PAGE_SOURCES
 
 import pathlib
 HERE = pathlib.Path(__file__).resolve().parent
@@ -80,6 +81,17 @@ def _trim(d):
 def page(path, title, desc, body, active=None, ld=None, crumbs=None, ogtype="website"):
     url = DOMAIN + path
     desc = _trim(desc)
+    if path not in ("/privacy/", "/terms/", "/contact/", "/404/"):
+        body = autolink(body, path)
+        src = PAGE_SOURCES.get(path)
+        if path.startswith("/services/") and path.count("/") == 3:
+            src = SERVICE_SOURCES.get(path.split("/")[2])
+        if path.startswith("/industries/") and path.count("/") == 3:
+            src = INDUSTRY_SOURCES.get(path.split("/")[2])
+        if src:
+            box = sources_box(src)
+            i = body.rfind('<section class="cta')
+            body = body[:i] + box + body[i:] if i != -1 else body + box
     graph = [ORG, {"@type":"WebSite","@id":DOMAIN+"/#web","url":DOMAIN+"/","name":BRAND,"publisher":{"@id":DOMAIN+"/#org"},"inLanguage":"en-US"}]
     if crumbs: graph.append(crumbs_ld(crumbs))
     if ld: graph += ld
@@ -148,7 +160,7 @@ def footer():
     return f'''<footer class="site-footer">
  <div class="wrap">
   <div class="foot">
-   <div><img src="/assets/logo-96.png" alt="" width="44" height="44" loading="lazy"><p>Professional virtual secretaries, receptionists and dispatchers for US home service businesses. Founded 2023.</p></div>
+   <div><img src="/assets/logo-96.png" alt="Top Dispatch logo" width="44" height="44" loading="lazy"><p>Professional virtual secretaries, receptionists and dispatchers for US home service businesses. Founded 2023.</p></div>
    <div><h2>Services</h2><ul><li><a href="/call-center-services/">Call center services</a></li><li><a href="/answering-service/">24/7 answering service</a></li>{svc}</ul></div>
    <div><h2>Industries</h2><ul>{ind}<li><a href="/industries/">All industries</a></li></ul></div>
    <div><h2>Company</h2><ul><li><a href="/about/">About us</a></li><li><a href="/how-it-works/">How it works</a></li><li><a href="/why-the-philippines/">Why the Philippines</a></li><li><a href="/pricing/">Pricing</a></li><li><a href="/reviews/">Client reviews</a></li><li><a href="/guides/">Guides</a></li><li><a href="/faq/">FAQ</a></li><li><a href="/contact/">Leave details</a></li></ul></div>
@@ -418,6 +430,16 @@ def industries_hub():
 
 def lc(x): return x if x.isupper() else x.lower()
 def art(x): return "an" if x[0].upper() in "AEIOU" or x.isupper() and x[0] in "HFLMNRSX" else "a"
+IND_SVC = {
+ "emergency": ["virtual-receptionist","dispatch","after-hours-answering"],
+ "sales": ["virtual-receptionist","appointment-setting","customer-support"],
+ "recurring": ["virtual-receptionist","appointment-setting","cold-calling"],
+}
+IND_KIND = {"roofing-answering-service":"sales","contractor-answering-service":"sales","cleaning-business-answering-service":"sales","landscaping-answering-service":"sales","medical-spa-answering-service":"sales",
+ "pest-control-answering-service":"recurring","security-alarm-answering-service":"recurring","chimney-answering-service":"recurring","air-duct-cleaning-answering-service":"recurring"}
+def ind_services(slug):
+    keys = IND_SVC[IND_KIND.get(slug,"emergency")]
+    return [x for k in keys for x in SERVICES if x["slug"]==k]
 def industry_page(i):
     path = f'/industries/{i["slug"]}/'
     nm = i["name"]
@@ -436,7 +458,7 @@ def industry_page(i):
   <p class="muted mt-s" style="font-size:.78rem;margin-bottom:0">Works inside the software you already run, including {i["software"]}.</p></div>
 </div></section>
 {ind_deep(i,label)}
-<section class="section bg-2"><div class="wrap"><div class="head"><h2>What Your {label} Secretary Takes Off Your Plate</h2><p>Start with the phones. Add dispatch, follow-ups and admin as you grow.</p></div><div class="svc-grid">{"".join(svc_card(s) for s in SERVICES[:6])}</div></div></section>
+<section class="section bg-2"><div class="wrap"><div class="head"><h2>What Your {label} Secretary Takes Off Your Plate</h2><p>Start with the phones. Add dispatch, follow-ups and admin as you grow.</p></div><div class="svc-grid">{"".join(svc_card(s) for s in ind_services(i["slug"]))}</div><p class="center mt-l"><a class="more" href="/services/">All 8 services {I("arrow")}</a></p></div></section>
 <section class="section"><div class="wrap"><div class="head"><h2>How It Works</h2><p>Live in 48 to 72 hours with a secretary who has worked in {lc(label)}.</p></div>{steps_block()}</div></section>
 <section class="section bg-2"><div class="wrap"><div class="head"><h2>{label} Answering Service FAQ</h2><p>What {lc(label)} owners ask before they sign up.</p></div>{faq_block(i["faqs"]+ID[i["slug"]]["extra_faqs"])}</div></section>
 <section class="section-tight"><div class="wrap"><div class="head" style="margin-bottom:24px"><h2 style="font-size:1.6rem">Other Trades We Support</h2></div><div class="links">{"".join(f'<a href="/industries/{x["slug"]}/">{x["name"]}</a>' for x in rel)}<a href="/industries/">All industries</a></div></div></section>
@@ -548,6 +570,13 @@ def contact():
          "Leave your details and get matched with a dedicated virtual receptionist or dispatcher for your home service business. Call (833) 505-4136.",body,None,ld,cr)
 
 # ================= PRICING =================
+MARKET_TABLE = """<div class="table-wrap"><table style="min-width:640px"><caption>Typical US phone-coverage costs, reviewed October 2026</caption><thead><tr><th scope="col">Option</th><th scope="col">How it is priced</th><th scope="col">Typical cost</th></tr></thead><tbody>
+<tr><th scope="row">In-house receptionist</th><td>Hourly wage plus payroll taxes, benefits, training and sick/holiday cover</td><td>Median wage $18.27/hour, about $38,010/year before employer costs (<a href="https://www.bls.gov/ooh/office-and-administrative-support/receptionists.htm" rel="noopener" target="_blank">BLS, May 2025</a>)</td></tr>
+<tr><th scope="row">Shared answering service</th><td>Per minute or per call, usually with a monthly minimum and overage</td><td>Published rates commonly around $0.70 to $2.00 per minute</td></tr>
+<tr><th scope="row">AI receptionist</th><td>Monthly plan sized by minutes or calls</td><td>Published plans commonly $25 to $300 per month</td></tr>
+<tr class="us"><th scope="row" class="us">Top Dispatch dedicated receptionist</th><td class="us">Flat monthly fee for a dedicated person's hours, no per-minute charges</td><td class="us"><a href="/contact/">Quote</a> based on hours and tasks</td></tr>
+</tbody></table></div><p class="muted mt-s" style="font-size:.78rem">Market ranges reflect published provider pricing we reviewed in October 2026 and change often. Check current pricing with each provider.</p>"""
+
 def pricing():
     cr=[("Home","/"),("Pricing","/pricing/")]
     plans = [("Part-Time","For owner-operators who need the busiest hours covered.","Up to 4–6 hours a day",["Dedicated secretary","Call answering &amp; booking","CRM updates","Monthly billing"],False),
@@ -562,7 +591,8 @@ def pricing():
     body = hero_sub("dollar","No Contracts, No Hidden Fees","Simple,","Transparent Pricing","A flat monthly fee for a dedicated secretary. No setup fees, no per-minute meter, no long-term contract.",cr) + \
       answer_box("How does Top Dispatch pricing work?","Top Dispatch charges one flat monthly fee for a dedicated remote secretary, sized by the hours you need (part-time, full-time or extended coverage) and the type of work. There are no setup fees, no per-call or per-minute charges and no long-term contract: service is month to month with 30 days' notice.", FACTS) + f'''
 <section class="section"><div class="wrap"><div class="head"><h2>Choose Your Coverage</h2><p>Every plan includes a dedicated, vetted secretary who works your hours.</p></div><div class="grid g3">{pc}</div></div></section>
-<section class="section bg-2"><div class="wrap"><div class="head"><h2>What Are Missed Calls Costing You?</h2><p>Compare a flat monthly fee with the work going to voicemail today.</p></div>{calc_block()}</div></section>
+<section class="section bg-2"><div class="wrap"><div class="head"><h2>What Phone Coverage Costs in the US</h2><p>How a dedicated receptionist compares with hiring locally, a shared answering service or an AI receptionist.</p></div>{MARKET_TABLE}</div></section>
+<section class="section"><div class="wrap"><div class="head"><h2>What Are Missed Calls Costing You?</h2><p>Compare a flat monthly fee with the work going to voicemail today.</p></div>{calc_block()}</div></section>
 <section class="section"><div class="wrap"><div class="head"><h2>How We Compare</h2></div>{compare_table()}</div></section>
 <section class="section bg-2"><div class="wrap"><div class="head"><h2>Pricing FAQ</h2></div>{faq_block(pf)}</div></section>''' + cta("Get Your Custom Quote","Tell us the hours and tasks you need covered. We reply within a few hours.")
     page("/pricing/","Virtual Receptionist Pricing, No Contracts | Top Dispatch",
@@ -611,16 +641,20 @@ def why():
 
 # ================= GUIDES =================
 GUIDES = [
- dict(slug="answering-service-cost", title="How Much Does an Answering Service Cost? (2026 Guide for Home Services)",
+ dict(slug="answering-service-cost", title="How Much Does an Answering Service Cost in 2026?",
   h1a="How Much Does an", h1b="Answering Service Cost?",
   meta="Answering service pricing explained for contractors: per-minute, per-call and flat-rate models, hidden fees, and when a dedicated receptionist costs less.",
   lead="Per minute, per call or a flat monthly fee. Here's how answering service pricing works for home service companies and how to compare options fairly.",
   answer="Answering service cost depends on the pricing model. Shared answering services usually charge per minute or per call with a monthly minimum, plus overage, holiday or after-hours fees. AI receptionists charge a monthly plan sized by call volume. A dedicated remote receptionist, like Top Dispatch, charges a flat monthly fee for a set number of hours, so the cost doesn't rise with call volume.",
   sections=[
+   ("Typical 2026 price ranges", MARKET_TABLE + "<p>The in-house figure is only the wage. Employer payroll taxes, benefits, recruiting, training and cover for sick days and holidays sit on top, and one person still only covers one shift. That is why owners compare a flat monthly fee for a dedicated remote receptionist against the fully loaded cost of a local hire, not just the hourly rate.</p>"),
    ("The three pricing models","<p><strong>Per minute.</strong> The most common model for shared answering services. You buy a bundle of minutes each month and pay overage when you go over. Watch how minutes are counted: some providers round each call up, or count hold and transfer time.</p><p><strong>Per call.</strong> A set price per answered call. Simple to budget at low volume, but expensive in a busy season and it often doesn't include booking or dispatch.</p><p><strong>Flat monthly.</strong> You pay for a person's time, regardless of how many calls come in. This is how Top Dispatch prices a dedicated receptionist.</p>"),
    ("Fees to ask about","<ul><li>Setup or onboarding fees</li><li>Monthly minimums</li><li>Overage rates</li><li>After-hours, weekend or holiday surcharges</li><li>Charges for appointment booking, warm transfers or software integration</li><li>Long-term contract and cancellation terms</li></ul><p>Top Dispatch has no setup fees and no long-term contract. Service is month to month.</p>"),
    ("When per-minute gets expensive","<p>Home service calls are rarely short. A good intake call for a no-heat emergency or a water heater quote takes several minutes, and busy seasons multiply volume. At steady daily volume, the per-minute bill can match or exceed the cost of a dedicated person who also books, dispatches and follows up.</p>"),
    ("How to compare fairly","<p>Estimate your monthly call count and average call length, then price each option against the same month. Add the value of what happens after the call: a message taken versus a job booked and dispatched. Our <a href=\"/pricing/\">missed-call calculator</a> helps put a number on calls that currently go to voicemail.</p>"),
+   ("Work out cost per booked job, not cost per minute","<p>The cheapest plan on paper is not always the cheapest service. What matters is how much you pay for each job that actually lands on your calendar.</p><p>Take a shop that receives 300 calls a month, of which 120 are genuine service requests. If a message-taking service passes all 120 on as messages and you call back, some of those callers will already have booked a competitor. If a receptionist books most of them while the caller is still on the line, more of the 120 become jobs.</p><p>So compare options like this: <strong>monthly cost ÷ jobs booked = cost per booked job</strong>. A higher monthly fee that books more jobs can be the lower cost per job. Run the numbers with your own call log and average ticket. The <a href=\"/pricing/\">missed-call calculator</a> helps estimate what is slipping through today.</p>"),
+   ("What pushes the price up or down","<ul><li><strong>Hours covered.</strong> Business hours only costs less than evenings, weekends or 24/7.</li><li><strong>Call volume and length.</strong> On per-minute plans, longer intake calls and busy seasons raise the bill.</li><li><strong>What happens on the call.</strong> Message-taking is cheapest. Quoting, booking into your software and dispatching are worth more.</li><li><strong>Outbound work.</strong> Confirmations, estimate follow-ups and reactivation calls add value on top of answering.</li><li><strong>Integrations.</strong> Some providers charge extra to connect your calendar or CRM.</li></ul>"),
+   ("Questions to ask before you sign","<ul><li>What exactly counts as a billable minute or call, including spam, transfers and hold time?</li><li>What is the overage rate, and what happens in a peak month?</li><li>Will the same person answer my line every day?</li><li>Can they book into my field-service software, or only take messages?</li><li>Are there setup fees, minimum terms or cancellation fees?</li><li>How are emergencies and after-hours calls handled?</li></ul><p>Top Dispatch answers these simply: a flat monthly fee for a dedicated person, no per-minute meter, no setup fee and month-to-month terms. See <a href=\"/answering-service/\">our answering service</a> or the <a href=\"/call-center-services/\">outsourced call center option</a>.</p>"),
    ("Bottom line","<p>Low volume or overflow only? A shared service may be enough. Steady daily calls and you need booking and dispatch? A dedicated receptionist is usually better value. <a href=\"/contact/\">Get a quote</a> for your hours.</p>")]),
  dict(slug="ai-receptionist-vs-human-receptionist", title="AI Receptionist vs. Human Receptionist for Home Services",
   h1a="AI Receptionist", h1b="vs. Human Receptionist",
