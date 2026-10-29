@@ -8,8 +8,9 @@ dispatchers and call center agents from the Philippines for US home service busi
 Goal: rank #1 in the USA and generate leads from businesses that want to hire a call center,
 answering service or receptionist. Every page must be SEO, AEO and GEO optimised.
 
-- Live: https://topdispatch-website-2.vercel.app (Vercel auto-deploys every push to `main`)
-- Final domain: https://topdispatchcrm.com (canonical URLs already use it)
+- Live domain: https://www.topdispatchusa.com (canonical host; Vercel auto-deploys every push to `main`)
+- topdispatch-website-2.vercel.app 301-redirects to the domain (vercel.json). topdispatchcrm.com is the separate Base44 CRM, not this site.
+- Search Console: property lives in the revealrank Google account.
 - Phone (833) 505-4136 · support@topdispatchcrm.com · Beverly Hills, CA 90212
 
 ## Golden rules

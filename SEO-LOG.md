@@ -22,3 +22,8 @@
 - Rewrote copy duplicated from the Base44 site (hero lead, Who We Are on home and About, Why Philippines cards, steps, values, team bios, pricing list).
 - Expanded thin pages: About (+how we work), How It Works (+matching, access, after go-live), Why Philippines (+time zone table, concerns), AI vs human guide (+call table, test questions, FCC note, decision guide), hire guide (+cost table, red flags, 30-day scorecard).
 - Still open (owner): contact form endpoint empty (leads only via mailto), reviews need verification, Cowork daily task not running, Search Console submission.
+
+## 2026-10-29: Domain live
+- Live domain is now https://www.topdispatchusa.com (owner connected it in Vercel). Canonicals, sitemap, robots, llms.txt, OG and schema switched to it.
+- vercel.json: 301 redirect from topdispatch-website-2.vercel.app to www.topdispatchusa.com.
+- Next: Search Console property in the revealrank Google account, verify, submit sitemap, request indexing for money pages.

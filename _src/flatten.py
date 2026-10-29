@@ -30,7 +30,7 @@ pri=lambda u:"1.0" if u=="/" else "0.8"
 open(OUT+"/sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{D}{'' if u=='/' else u}{'/' if u=='/' else ''}</loc><lastmod>2026-10-29</lastmod><priority>{pri(u)}</priority></url>" for u in pages)+"</urlset>\n")
 old=[("/ServicesPage","/services"),("/AboutPage","/about"),("/ReviewsPage","/reviews"),("/FAQPage","/faq"),("/IndustriesPage","/industries"),("/ContactPage","/contact")]
 cfg={"cleanUrls":True,"trailingSlash":False,"rewrites":rew,
- "redirects":[{"source":a,"destination":b,"permanent":True} for a,b in old],
+ "redirects":[{"source":"/:path*","has":[{"type":"host","value":"topdispatch-website-2.vercel.app"}],"destination":D+"/:path*","permanent":True}]+[{"source":a,"destination":b,"permanent":True} for a,b in old],
  "headers":[{"source":"/(.*)\\.(png|ico|css|js)","headers":[{"key":"Cache-Control","value":"public, max-age=86400"}]},
             {"source":"/(.*)","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},{"key":"X-Frame-Options","value":"SAMEORIGIN"}]}]}
 open(OUT+"/vercel.json","w").write(json.dumps(cfg,indent=1))

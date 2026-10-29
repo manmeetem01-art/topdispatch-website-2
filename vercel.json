@@ -105,6 +105,17 @@
  ],
  "redirects": [
   {
+   "source": "/:path*",
+   "has": [
+    {
+     "type": "host",
+     "value": "topdispatch-website-2.vercel.app"
+    }
+   ],
+   "destination": "https://www.topdispatchusa.com/:path*",
+   "permanent": true
+  },
+  {
    "source": "/ServicesPage",
    "destination": "/services",
    "permanent": true

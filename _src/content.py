@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# Canonical host. Switch to "https://topdispatchcrm.com" once that domain points to Vercel
-# (then add a vercel.app -> topdispatchcrm.com redirect in Vercel Domains).
-DOMAIN = "https://topdispatch-website-2.vercel.app"
+# Canonical host: the live custom domain on Vercel.
+# topdispatch-website-2.vercel.app 301-redirects here via vercel.json.
+DOMAIN = "https://www.topdispatchusa.com"
 BRAND = "Top Dispatch"
 PHONE = "(833) 505-4136"
 PHONE_E164 = "+18335054136"
