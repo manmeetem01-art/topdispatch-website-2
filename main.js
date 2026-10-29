@@ -53,9 +53,13 @@
       }
       var b = form.querySelector('button[type="submit"]');
       b.disabled = true;
-      fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
-        .then(function (r) {
-          if (!r.ok) throw new Error();
+      var payload = {};
+      data.forEach(function (v, k) { if (k !== 'company_website') payload[k] = v; });
+      payload.page = window.location.href;
+      fetch(endpoint, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json', Accept: 'application/json' } })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok || String(res.j && res.j.success) === 'false') throw new Error();
           form.reset();
           status.className = 'form-status ok';
           status.textContent = 'Details sent. Our team will contact you within a few hours.';

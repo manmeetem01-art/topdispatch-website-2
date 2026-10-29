@@ -563,7 +563,8 @@ def contact():
    <a class="card center t-blue" href="tel:{PHONE_E164}"><span class="ic ic-round">{I("phone")}</span><h3 style="font-size:1rem">Call Us</h3><p style="font-size:.8rem">{PHONE} · 24/7</p></a>
   </div>
  </div>
- <form class="form-card" data-lead data-endpoint="" novalidate>
+ <form class="form-card" data-lead data-endpoint="https://formsubmit.co/ajax/manmeetsingh0177@gmail.com" novalidate>
+  <input type="hidden" name="_subject" value="New lead: Top Dispatch website"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false">
   <h2>Leave Your Details</h2><p class="sub">Fill out the form and our team will get back to you within a few hours.</p>
   <div class="field"><label for="f-name">Full Name</label><input id="f-name" name="name" autocomplete="name" placeholder="John Doe" required></div>
   <div class="form-row"><div class="field"><label for="f-email">Email Address</label><input id="f-email" type="email" name="email" autocomplete="email" placeholder="john@example.com" required></div>
