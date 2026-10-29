@@ -31,7 +31,7 @@ open(OUT+"/sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<url
 old=[("/ServicesPage","/services"),("/AboutPage","/about"),("/ReviewsPage","/reviews"),("/FAQPage","/faq"),("/IndustriesPage","/industries"),("/ContactPage","/contact")]
 cfg={"cleanUrls":True,"trailingSlash":False,"rewrites":rew,
  "redirects":[{"source":"/:path*","has":[{"type":"host","value":"topdispatch-website-2.vercel.app"}],"destination":D+"/:path*","permanent":True}]+[{"source":a,"destination":b,"permanent":True} for a,b in old],
- "headers":[{"source":"/(.*)\\.(png|ico|css|js)","headers":[{"key":"Cache-Control","value":"public, max-age=86400"}]},
+ "headers":[{"source":"/(.*)\\.(png|ico|css|js)","headers":[{"key":"Cache-Control","value":"public, max-age=300, must-revalidate"}]},
             {"source":"/(.*)","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},{"key":"X-Frame-Options","value":"SAMEORIGIN"}]}]}
 open(OUT+"/vercel.json","w").write(json.dumps(cfg,indent=1))
 print(len(pages),"pages,",len(rew),"rewrites,",len(os.listdir(OUT)),"files")

@@ -126,7 +126,7 @@ def page(path, title, desc, body, active=None, ld=None, crumbs=None, ogtype="web
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
-<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/styles.css?v={ASSET_V}">
 <script type="application/ld+json">{ldjson}</script>
 </head>
 <body>
@@ -144,7 +144,7 @@ def page(path, title, desc, body, active=None, ld=None, crumbs=None, ogtype="web
 {body}
 </main>
 {footer()}
-<script src="/assets/main.js" defer></script>
+<script src="/assets/main.js?v={ASSET_V}" defer></script>
 </body>
 </html>'''
     d = OUT + path
@@ -154,6 +154,8 @@ def page(path, title, desc, body, active=None, ld=None, crumbs=None, ogtype="web
     SITEMAP.append(path)
 
 SITEMAP = []
+import hashlib as _h
+ASSET_V = _h.md5((open(str(HERE/'assets'/'main.js'),'rb').read()+open(str(HERE/'assets'/'styles.css'),'rb').read())).hexdigest()[:8]
 
 def footer():
     svc = "".join(f'<li><a href="/services/{s["slug"]}/">{s["name"]}</a></li>' for s in SERVICES)
