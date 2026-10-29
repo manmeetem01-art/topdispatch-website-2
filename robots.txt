@@ -19,4 +19,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://topdispatchcrm.com/sitemap.xml
+Sitemap: https://topdispatch-website-2.vercel.app/sitemap.xml

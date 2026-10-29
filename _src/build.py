@@ -8,7 +8,7 @@ from links import autolink, sources_box, SERVICE_SOURCES, INDUSTRY_SOURCES, PAGE
 import pathlib
 HERE = pathlib.Path(__file__).resolve().parent
 OUT = str(HERE / "_site")
-TODAY = "2026-10-20"
+TODAY = "2026-10-29"
 E = html.escape
 
 # ---------- icons (lucide-style strokes) ----------
@@ -204,13 +204,13 @@ def answer_box(q, a, facts=None):
     return f'<section class="section-tight"><div class="wrap"><div class="answer"><h2>{q}</h2><p>{a}</p>{f}</div></div></section>'
 FACTS = [("1 dedicated person","Same receptionist daily"),("48–72 hours","Sign-up to first shift"),("Month to month","No setup fees"),("Your time zone","ET, CT, MT or PT")]
 
-WHY_PH = [("message","t-cyan","Fluent English Speakers","Filipino professionals speak clear, neutral English, so your American customers have natural conversations every time."),
-          ("globe","t-green","US Business Culture","Deeply familiar with American business etiquette, customer expectations and home service industry standards."),
-          ("dollar","t-amber","Cost-Effective Solution","Get experienced professional support without the payroll taxes, benefits and overhead of a local hire."),
-          ("clock","t-indigo","Your Timezone, Your Hours","Your team works your schedule, whether EST, CST, MST or PST. We adapt to your business hours, not the other way round.")]
-STEPS = [("usercheck","t-cyan","#3aa6c9","Sign Up & Tell Us Your Needs","Fill out a quick form about your business, industry and the type of support you need. It takes less than five minutes."),
-         ("users","t-violet","#7c6ef0","Get Matched With Your Secretary","We hand-pick a secretary with experience in your industry. You interview them before they start, so you feel confident."),
-         ("thumbsup","t-green","#3fae6e","Start Growing Your Business","Your secretary is briefed on your business and starts handling calls, bookings and back-office tasks. You focus on the field.")]
+WHY_PH = [("message","t-cyan","Fluent English Speakers","Every receptionist passes English testing and is coached on US phone etiquette, so callers hear a clear, friendly voice, not a script."),
+          ("globe","t-green","US Business Culture","Many of our people come from US-facing customer service roles and already know how American homeowners expect to be treated on the phone."),
+          ("dollar","t-amber","Cost-Effective Solution","One flat monthly fee replaces local wages, payroll taxes, benefits, recruiting and cover for sick days."),
+          ("clock","t-indigo","Your Timezone, Your Hours","Your receptionist works the Philippine night shift so they are live during your day in Eastern, Central, Mountain or Pacific time.")]
+STEPS = [("usercheck","t-cyan","#3aa6c9","Sign Up & Tell Us Your Needs","Tell us your trade, the hours you need covered and what you want handled. The form takes a few minutes."),
+         ("users","t-violet","#7c6ef0","Get Matched With Your Secretary","We shortlist people who have already worked in your trade. You talk to them first and pick the one you want."),
+         ("thumbsup","t-green","#3fae6e","Start Growing Your Business","We load your scripts, prices and service area, test call forwarding, and your receptionist starts taking calls.")]
 def steps_block():
     return '<div class="grid g3 steps">' + "".join(f'<div class="card step {t}" style="--a:{c}"><span class="num">0{i+1}</span><div class="ic" style="margin:0 auto">{I(ic)}</div><h3>{h}</h3><p>{p}</p></div>' for i,(ic,t,c,h,p) in enumerate(STEPS)) + "</div>"
 def why_block():
@@ -261,7 +261,7 @@ def home():
 <section class="hero"><div class="wrap">
  <span class="badge">{I("star")}Trusted by 153+ businesses across the US</span>
  <h1><span class="line">Scale Your</span><span class="line grad">Remote Team</span></h1>
- <p class="lead">Professional virtual secretaries based in the Philippines, handling your calls, scheduling and back-office operations so you can focus on growing your business.</p>
+ <p class="lead">Dedicated receptionists and dispatchers, trained in the Philippines for US home service companies. They pick up your calls, run your schedule and clear your admin while you stay on the job.</p>
  <p class="tag">Dedicated remote receptionists &amp; dispatchers for US home service businesses</p>
  <div class="actions">{btn(cls="btn-lg")}<span class="phone">or call <a href="tel:{PHONE_E164}">{PHONE}</a></span></div>
 </div></section>
@@ -271,9 +271,9 @@ def home():
  <div class="prose">
   <span class="badge">{I("heart")}Our Story</span>
   <h2 class="mt-s">Who We Are</h2>
-  <p>Founded in 2023, <strong>Top Dispatch</strong> was built with one mission: to give service businesses access to world-class virtual secretaries at an affordable price.</p>
-  <p>Our team of highly trained professionals based in the Philippines brings <strong>2 to 5 years of hands-on experience</strong> in appointment setting, cold calling, dispatch coordination and back-office management.</p>
-  <p>We specialize in <strong>home service industries</strong>, from HVAC and roofing to locksmith and plumbing, giving your business the professional support it deserves without the overhead of a local hire.</p>
+  <p><strong>Top Dispatch</strong> started in 2023 to fix a problem every small trade business knows: the phone rings while everyone is on a job, and the work goes to whoever answers first.</p>
+  <p>We place one dedicated, trained person with each client. Our receptionists and dispatchers work from the Philippines and bring <strong>2 to 5 years of experience</strong> booking jobs, dispatching technicians, calling back estimates and keeping the books tidy for US companies.</p>
+  <p>We only work with <strong>home service businesses</strong>, including HVAC, plumbing, electrical, roofing, locksmith and garage door companies, so your person learns your trade's calls instead of reading a generic script.</p>
  </div>
  <div class="grid g2">
   <div class="card card-sm t-cyan"><div class="ic ic-sm">{I("globe")}</div><h3>Based in Philippines</h3><p>Professional team with US business culture training</p></div>
@@ -321,7 +321,7 @@ def home():
 <section class="section bg-navy"><div class="wrap">
  <div class="head"><h2>Simple, Transparent Pricing</h2><p>No contracts, no hidden fees. Flexible plans tailored to your needs.</p></div>
  <div class="price-box">
-  {checks(["Professional English-speaking secretary","2–5 years of relevant industry experience","Full-time or part-time availability","Real-time call &amp; dispatch handling","Back office &amp; CRM management","Monthly billing, no long-term contracts"])}
+  {checks(["A dedicated, English-tested receptionist","2–5 years of home service experience","Part-time, full-time or after-hours cover","Live call answering and dispatch","Admin and CRM upkeep in quiet hours","Billed monthly, cancel with 30 days' notice"])}
   <p>Contact us to find the right plan for your business needs.</p>
   {btn()}
  </div>
@@ -470,20 +470,20 @@ def industry_page(i):
 
 # ================= ABOUT =================
 def about():
-    vals = [("shield","t-cyan","Integrity","We operate with full transparency: no hidden fees, no surprises. What we promise, we deliver."),
-            ("star","t-amber","Excellence","Every secretary undergoes vetting, English testing and industry-specific training before placement."),
-            ("heart","t-rose","Partnership","We don't just provide a service. We become an extension of your team and care about your growth."),
-            ("zap","t-indigo","Speed","Most clients are up and running within 48–72 hours. We move fast without cutting corners.")]
-    team = [("Alex Turner","Founder & CEO","Built Top Dispatch to solve a problem he faced as a home service business owner: finding reliable, professional support without local overhead."),
-            ("Maria Reyes","Head of Operations","8 years of experience managing remote teams across the US and the Philippines. Makes sure every client is matched with the right secretary within 48 hours."),
-            ("James Kim","Director of Training","Developed the industry-specific training curriculum that prepares every secretary for real US home service environments from day one.")]
+    vals = [("shield","t-cyan","Integrity","One flat monthly price, written down. No per-minute meter, setup fee or surprise overage."),
+            ("star","t-amber","Excellence","People are screened, English-tested and trained on your trade's call types before they answer your line."),
+            ("heart","t-rose","Partnership","Your receptionist works only for your business, so they act like part of your team, not an outside vendor."),
+            ("zap","t-indigo","Speed","Most clients go live in 48 to 72 hours, with a daily check-in during the first week to tune the scripts.")]
+    team = [("Alex Turner","Founder & CEO","Started Top Dispatch after struggling, as a home service owner, to find dependable phone and office help without the cost of a local hire."),
+            ("Maria Reyes","Head of Operations","Has run remote teams serving US clients from the Philippines for eight years and oversees matching every new client with the right person."),
+            ("James Kim","Director of Training","Built our trade-by-trade training, from HVAC intake questions to plumbing emergency scripts, so new hires are useful from their first call.")]
     cr=[("Home","/"),("About","/about/")]
-    body = hero_sub("heart","Our Story","About","Top Dispatch","Founded in 2023 with one mission: give service businesses access to world-class virtual secretaries.",cr) + f'''
+    body = hero_sub("heart","Our Story","About","Top Dispatch","Dedicated receptionists and dispatchers for US home service companies, since 2023.",cr) + f'''
 <section class="section"><div class="wrap split">
  <div class="prose"><h2>Who We Are</h2>
-  <p>Founded in 2023, <strong>Top Dispatch</strong> was built with one mission: to give service businesses access to world-class virtual secretaries at a professional price point.</p>
-  <p>Our team of highly trained professionals based in the Philippines brings <strong>2 to 5 years of hands-on experience</strong> in appointment setting, cold calling, dispatch coordination and back-office management.</p>
-  <p>We specialize in <strong>home service industries</strong>, from HVAC and roofing to locksmith and plumbing, giving your business the professional support it deserves.</p>
+  <p><strong>Top Dispatch</strong> was set up in 2023 by people who had run the front office of a home service business and knew how many jobs were lost to an unanswered phone.</p>
+  <p>Instead of a call center pool, we give each client one dedicated receptionist or dispatcher. Our team works from the Philippines, covers US business hours and averages <strong>2 to 5 years of experience</strong> in booking, dispatch, outbound follow-up and admin for American companies.</p>
+  <p>We stay narrow on purpose: <strong>home services only</strong>. That focus is why our people know the difference between a no-heat call and a tune-up, or a burst pipe and a dripping tap.</p>
   <p>We are headquartered in Beverly Hills, California, and serve owners in every US time zone.</p></div>
  <div class="grid g2">
   <div class="card card-sm t-cyan"><div class="ic ic-sm">{I("globe")}</div><h3>Based in Philippines</h3><p>Professional team with deep US business culture training</p></div>
@@ -492,6 +492,17 @@ def about():
   <div class="card card-sm t-rose"><div class="ic ic-sm">{I("clock")}</div><h3>Founded 2023</h3><p>Built from the ground up with passion for small business</p></div>
  </div></div></section>
 <section class="section bg-2"><div class="wrap"><div class="head"><h2>Our Core Values</h2></div><div class="grid g4">{"".join(f'<div class="card center {t}"><div class="ic">{I(ic)}</div><h3>{h}</h3><p>{p}</p></div>' for ic,t,h,p in vals)}</div></div></section>
+<section class="section"><div class="narrow prose">
+ <h2>How We Work With Clients</h2>
+ <p>Most outsourced phone services are built for volume: a large pool of agents answers many companies' lines from a generic script and bills by the minute. That model is fine for taking messages. It struggles when a caller needs a quote, a booked slot or a technician sent to a flooded basement.</p>
+ <p>We built Top Dispatch the other way round. Each client gets one person who learns their business, works inside their own software and is measured on jobs booked, not minutes logged. If that person is out, a briefed backup covers the line so callers never notice.</p>
+ <h3>What we do</h3>
+ <ul><li>Inbound reception, booking and <a href="/services/dispatch/">dispatch</a></li><li><a href="/services/after-hours-answering/">After-hours and weekend coverage</a> with your emergency rules</li><li>Outbound follow-up, confirmations and reactivation calls</li><li>Back-office work such as invoicing support, inbox and CRM upkeep</li></ul>
+ <h3>What we don't do</h3>
+ <ul><li>Charge per minute or per call</li><li>Lock you into a long-term contract</li><li>Give clinical, legal or financial advice to your customers</li><li>Monitor alarm signals, which belongs with your licensed central station</li></ul>
+ <h3>Where we are</h3>
+ <p>Our company address is in Beverly Hills, California, and our receptionists work remotely from the Philippines on US hours. Read more about <a href="/why-the-philippines/">why our team is based in the Philippines</a>, or see <a href="/how-it-works/">how onboarding works</a>.</p>
+</div></section>
 <section class="section"><div class="wrap"><div class="head"><h2>Meet the Team</h2></div><div class="grid g3 team">{"".join(f'<div class="card center"><span class="avatar">{initials(n)}</span><h3>{n}</h3><div class="role">{r}</div><p>{p}</p></div>' for n,r,p in team)}</div></div></section>
 ''' + cta("Join Our Growing Family","153+ businesses already trust Top Dispatch. You're next.")
     ld=[{"@type":"AboutPage","url":DOMAIN+"/about/","name":"About Top Dispatch","about":{"@id":DOMAIN+"/#org"}}]+[{"@type":"Person","name":n,"jobTitle":r,"worksFor":{"@id":DOMAIN+"/#org"}} for n,r,_ in team]
@@ -611,7 +622,16 @@ def how():
  <div><h2 style="margin-bottom:18px">Your Onboarding Timeline</h2><div class="log">{tl}</div></div>
  <div class="prose"><h2>What We Need From You</h2><p>Gather these before your briefing and your secretary sounds like part of the team from the first call.</p>{checks(need,True)}<div class="mt-m">{btn()}</div></div>
 </div></section>
-<section class="section"><div class="wrap"><div class="head"><h2>Onboarding FAQ</h2></div>{faq_block(hf)}</div></section>''' + cta("Ready to Get Started?","Tell us what you need and meet your match this week.")
+<section class="section"><div class="narrow prose">
+ <h2>How We Match You With the Right Person</h2>
+ <p>Matching is the step that decides whether the service works. We look at four things: the trade you are in, the work you want covered (reception, dispatch, outbound or admin), the hours you need, and the software you run. A plumbing company on ServiceTitan that needs evening cover gets a different shortlist from a cleaning company on Jobber that needs daytime booking.</p>
+ <p>You then speak to the shortlisted candidates. Listen for the things your customers will notice: a clear voice, calm under pressure and good questions. If nobody fits, we go back to the shortlist.</p>
+ <h2>Access, Security and Your Data</h2>
+ <p>Your receptionist gets their own user login for each tool, with only the permissions the work needs. They never need your banking access or personal passwords, and you can remove access at any time. Most phone systems let you forward your existing number or add a user to a ring group, so your business number does not change.</p>
+ <h2>After Go-Live</h2>
+ <p>During the first week you get a daily call summary and a short check-in, which is when most scripts get tuned. After that, summaries move to the rhythm you prefer and we review results together each month: answer rate, jobs booked, callbacks and anything the receptionist has spotted. Many clients then add tasks such as <a href="/services/appointment-setting/">estimate follow-up</a> or <a href="/services/back-office-support/">back-office work</a> once the phones are running smoothly.</p>
+</div></section>
+<section class="section bg-2"><div class="wrap"><div class="head"><h2>Onboarding FAQ</h2></div>{faq_block(hf)}</div></section>''' + cta("Ready to Get Started?","Tell us what you need and meet your match this week.")
     ld=[{"@type":"HowTo","name":"How to get a Top Dispatch virtual secretary","totalTime":"P3D","step":[{"@type":"HowToStep","position":k+1,"name":h,"text":p} for k,(_,_,_,h,p) in enumerate(STEPS)]},faq_ld(hf)]
     page("/how-it-works/","How It Works: Get a Virtual Receptionist in 48–72 Hours | Top Dispatch",
          "Sign up, interview your matched secretary and hand over the phones. See the Top Dispatch onboarding timeline and what we need from you.",body,None,ld,cr)
@@ -632,6 +652,18 @@ def why():
  <p>Manila runs 12 to 16 hours ahead of the mainland US, depending on daylight saving time. Your secretary works the Philippine night shift so they are fully on during your business day, whether you are in New York, Chicago, Denver or Los Angeles.</p>
  <h3>Experience that transfers</h3>
  <p>Many of our secretaries come from US-facing call centers and BPO roles where they handled scheduling, customer service and outbound calling. We add trade-specific training so they understand furnaces, sewer lines and torsion springs before day one.</p>
+ <h3>What time your receptionist starts</h3>
+ <p>Manila does not use daylight saving time, so the gap to the US changes twice a year. Here is when an 8:00 AM start in your time zone happens in Manila:</p>
+ <div class="table-wrap"><table style="min-width:520px"><thead><tr><th scope="col">Your time zone</th><th scope="col">8:00 AM your time is, in Manila</th><th scope="col">Hours ahead</th></tr></thead><tbody>
+ <tr><th scope="row">Eastern (EDT / EST)</th><td>8:00 PM / 9:00 PM</td><td>12 / 13</td></tr>
+ <tr><th scope="row">Central (CDT / CST)</th><td>9:00 PM / 10:00 PM</td><td>13 / 14</td></tr>
+ <tr><th scope="row">Mountain (MDT / MST)</th><td>10:00 PM / 11:00 PM</td><td>14 / 15</td></tr>
+ <tr><th scope="row">Pacific (PDT / PST)</th><td>11:00 PM / midnight</td><td>15 / 16</td></tr></tbody></table></div>
+ <h3>Common concerns, answered honestly</h3>
+ <p><strong>Accent.</strong> Filipino English is generally easy for American callers to follow, but voices differ. That is why you interview your receptionist before they start.</p>
+ <p><strong>Power and internet.</strong> Outages can happen anywhere. Ask any offshore provider, including us, what backup internet and power the receptionist has and what happens to your line if they drop.</p>
+ <p><strong>Turnover.</strong> High churn is the main weakness of large offshore call centers. A dedicated placement with one client, steady hours and clear expectations tends to keep people longer. Ask providers how they handle a replacement if someone leaves.</p>
+ <p><strong>Data access.</strong> Give your receptionist their own logins with limited permissions, never shared passwords. See <a href="/how-it-works/">how onboarding and access work</a>.</p>
  <h3>Sources</h3>
  <p>English ranking: <a href="https://www.ef.com/wwen/epi/" rel="noopener">EF English Proficiency Index</a>. Workforce figure: IBPAP industry estimates reported for end of 2025.</p>
 </div></section>
@@ -656,7 +688,7 @@ GUIDES = [
    ("What pushes the price up or down","<ul><li><strong>Hours covered.</strong> Business hours only costs less than evenings, weekends or 24/7.</li><li><strong>Call volume and length.</strong> On per-minute plans, longer intake calls and busy seasons raise the bill.</li><li><strong>What happens on the call.</strong> Message-taking is cheapest. Quoting, booking into your software and dispatching are worth more.</li><li><strong>Outbound work.</strong> Confirmations, estimate follow-ups and reactivation calls add value on top of answering.</li><li><strong>Integrations.</strong> Some providers charge extra to connect your calendar or CRM.</li></ul>"),
    ("Questions to ask before you sign","<ul><li>What exactly counts as a billable minute or call, including spam, transfers and hold time?</li><li>What is the overage rate, and what happens in a peak month?</li><li>Will the same person answer my line every day?</li><li>Can they book into my field-service software, or only take messages?</li><li>Are there setup fees, minimum terms or cancellation fees?</li><li>How are emergencies and after-hours calls handled?</li></ul><p>Top Dispatch answers these simply: a flat monthly fee for a dedicated person, no per-minute meter, no setup fee and month-to-month terms. See <a href=\"/answering-service/\">our answering service</a> or the <a href=\"/call-center-services/\">outsourced call center option</a>.</p>"),
    ("Bottom line","<p>Low volume or overflow only? A shared service may be enough. Steady daily calls and you need booking and dispatch? A dedicated receptionist is usually better value. <a href=\"/contact/\">Get a quote</a> for your hours.</p>")]),
- dict(slug="ai-receptionist-vs-human-receptionist", title="AI Receptionist vs. Human Receptionist for Home Services",
+ dict(slug="ai-receptionist-vs-human-receptionist", title="AI Receptionist vs Human Receptionist for Home Services",
   h1a="AI Receptionist", h1b="vs. Human Receptionist",
   meta="Should a contractor use an AI receptionist or a human one? Compare call handling, dispatch, cost and customer experience for home service businesses.",
   lead="AI voice agents are getting better fast. Here's where they work for home service companies, where a trained human still wins, and how to combine both.",
@@ -665,6 +697,10 @@ GUIDES = [
    ("Where AI receptionists do well","<ul><li>Answering every call instantly, even at 3 AM</li><li>Common questions: hours, service area, basic pricing</li><li>Booking into open calendar slots through integrations</li><li>Handling overflow when lines are busy</li></ul>"),
    ("Where a human receptionist wins","<ul><li>Emergency triage with follow-up questions that depend on the answer</li><li>Talking a caller to the water shutoff or out of a gas smell</li><li>Calling a technician and solving a schedule clash</li><li>Handling complaints, upset customers and sensitive situations</li><li>Following up on estimates and selling maintenance plans</li></ul>"),
    ("Cost comparison","<p>AI plans are usually priced by call volume or minutes. A dedicated human costs a flat monthly fee but also covers dispatch, follow-ups and back-office work in quiet hours. Compare what each option actually <em>does</em> per dollar, not just answer rate. See <a href=\"/guides/answering-service-cost/\">how answering service pricing works</a>.</p>"),
+   ("Five real calls, AI vs human","<div class=\"table-wrap\"><table style=\"min-width:560px\"><thead><tr><th scope=\"col\">Call</th><th scope=\"col\">AI receptionist</th><th scope=\"col\">Trained human</th></tr></thead><tbody><tr><th scope=\"row\">\"What's your diagnostic fee and do you cover my ZIP?\"</th><td>Handles well if the answers are loaded</td><td>Handles well</td></tr><tr><th scope=\"row\">No heat, elderly parent in the house, 50°F inside</th><td>Can flag urgent; struggles with follow-up judgment</td><td>Asks the right questions, pages on-call, reassures caller</td></tr><tr><th scope=\"row\">Angry customer disputing an invoice</th><td>Often escalates or loops</td><td>De-escalates, checks the job record, resolves or escalates with context</td></tr><tr><th scope=\"row\">Tech running two hours late, three customers affected</th><td>Cannot rearrange the board</td><td>Reshuffles jobs and calls each customer</td></tr><tr><th scope=\"row\">Spam or sales call</th><td>Screens well</td><td>Screens well</td></tr></tbody></table></div><p>The pattern is clear: AI is strong on predictable, repetitive calls. Humans are strong wherever the right answer depends on context, emotion or your schedule.</p>"),
+   ("Questions to test any AI receptionist","<ul><li>Call it yourself with your three hardest real calls. Does it book correctly?</li><li>What happens when a caller goes off-script or is upset?</li><li>Can it write into your field-service software, or only send you a summary?</li><li>How is it priced when you have a busy month?</li><li>Can a human take over mid-call?</li></ul>"),
+   ("A compliance note on outbound AI calls","<p>In 2024 the FCC confirmed that calls made with AI-generated voices count as artificial or prerecorded voice calls under the Telephone Consumer Protection Act. In practice, using an AI voice for outbound marketing calls needs the same consent as a robocall. Inbound answering is a different situation, but check your own use case with an advisor. A human caller working your own customer lists avoids that question for <a href=\"/services/cold-calling/\">outbound follow-up</a>.</p>"),
+   ("How to decide","<ul><li><strong>Under about 10 calls a day, mostly simple questions:</strong> AI or a shared answering service can be enough.</li><li><strong>Steady daily calls, emergencies and dispatch:</strong> a dedicated human usually books more jobs per dollar.</li><li><strong>Both:</strong> a human for the business day and dispatch, with AI or an after-hours human for overflow.</li></ul>"),
    ("A practical combination","<p>Use a dedicated human for your business day and dispatch, and an AI or after-hours human for overflow and nights. Top Dispatch offers <a href=\"/services/after-hours-answering/\">after-hours answering</a> with a real person if you want humans around the clock.</p>")]),
  dict(slug="how-to-hire-a-virtual-receptionist", title="How to Hire a Virtual Receptionist for Your Home Service Business",
   h1a="How to Hire a", h1b="Virtual Receptionist",
@@ -676,7 +712,10 @@ GUIDES = [
    ("2. Questions to ask providers","<ul><li>Will I have the same person every day?</li><li>Have they worked in my trade?</li><li>Can I interview them first?</li><li>Will they work inside my software?</li><li>How is pricing calculated, and is there a contract?</li><li>What happens when they're sick?</li></ul>"),
    ("3. Prepare your playbook","<p>Write down your greeting, services and exclusions, price sheet, service area, technician skills, on-call rota and emergency rules. This is what turns a good receptionist into <em>your</em> receptionist.</p>"),
    ("4. Set up access","<p>Create a user login in your field-service software and phone system with only the permissions needed. Forward your line or add the receptionist to your ring group.</p>"),
-   ("5. Run the first week closely","<p>Read call summaries daily, correct anything early and add notes to the playbook. By week two most owners are spending far less time on the phone. <a href=\"/how-it-works/\">See how Top Dispatch onboarding works</a>.</p>")]),
+   ("Compare the real cost of each option", MARKET_TABLE + "<p>Remember to compare fully loaded costs. A local hire's wage is only the start, and one person covers one shift. A dedicated remote receptionist on a flat monthly fee often covers more hours for less, but only if they can book and dispatch, not just take messages.</p>"),
+   ("Red flags when choosing a provider","<ul><li>You can't speak to the person who will answer your phone</li><li>Pricing is per minute with a high overage rate and no cap</li><li>They can't log in to your scheduling or field-service software</li><li>Long minimum terms or cancellation fees</li><li>No clear plan for sick days, holidays or turnover</li><li>Vague answers about who can access your customer data</li></ul>"),
+   ("5. Run the first week closely","<p>Read call summaries daily, correct anything early and add notes to the playbook. By week two most owners are spending far less time on the phone. <a href=\"/how-it-works/\">See how Top Dispatch onboarding works</a>.</p>"),
+   ("6. Score it after 30 days","<p>Judge the hire on results, not impressions. After a month, look at: share of calls answered live, jobs booked from inbound calls, callbacks from customers asking where the tech is, open estimates followed up, and how much of your own day you got back. If the numbers are not moving, the script or the fit needs work, and a good provider will help fix either.</p>")]),
 ]
 def guides_hub():
     cr=[("Home","/"),("Guides","/guides/")]
@@ -693,7 +732,7 @@ def guide_page(g):
     toc="".join(f'<li><a href="#{ids[k]}">{h}</a></li>' for k,(h,_) in enumerate(g["sections"]))
     secs="".join(f'<h2 id="{ids[k]}">{h}</h2>{c}' for k,(h,c) in enumerate(g["sections"]))
     others="".join(f'<a href="/guides/{x["slug"]}/">{x["h1a"]} {x["h1b"]}</a>' for x in GUIDES if x["slug"]!=g["slug"])
-    body = hero_sub("book","Guide",g["h1a"],g["h1b"],g["lead"],cr,extra=f'<p class="meta">By the Top Dispatch team · Updated <time datetime="{TODAY}">October 20, 2026</time></p>') + \
+    body = hero_sub("book","Guide",g["h1a"],g["h1b"],g["lead"],cr,extra=f'<p class="meta">By the Top Dispatch team · Updated <time datetime="{TODAY}">October 29, 2026</time></p>') + \
       answer_box("The short answer", g["answer"]) + \
       f'<article class="article"><div class="narrow prose"><nav class="toc" aria-label="Contents"><b>In this guide</b><ol>{toc}</ol></nav>{secs}<div class="mt-l">{btn("Get matched with a receptionist")}</div></div></article>' + \
       f'<section class="section-tight bg-2"><div class="wrap"><div class="head" style="margin-bottom:24px"><h2 style="font-size:1.6rem">More Guides</h2></div><div class="links">{others}</div></div></section>' + \
@@ -706,7 +745,7 @@ def guide_page(g):
 def legal(path, name, intro, sections):
     cr=[("Home","/"),(name,path)]
     secs="".join(f"<h2>{h}</h2><p>{p}</p>" for h,p in sections)
-    body = hero_sub("shield","Legal",name.split()[0],(" ".join(name.split()[1:])),intro,cr,extra=f'<p class="meta">Last updated <time datetime="{TODAY}">October 20, 2026</time></p>') + f'<article class="article"><div class="narrow prose">{secs}<p>Questions? Email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p></div></article>'
+    body = hero_sub("shield","Legal",name.split()[0],(" ".join(name.split()[1:])),intro,cr,extra=f'<p class="meta">Last updated <time datetime="{TODAY}">October 29, 2026</time></p>') + f'<article class="article"><div class="narrow prose">{secs}<p>Questions? Email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p></div></article>'
     page(path,f"{name} | Top Dispatch",f"{name} for the Top Dispatch website and services.",body,None,None,cr)
 
 def build_legal():

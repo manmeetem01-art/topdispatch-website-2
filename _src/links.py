@@ -141,7 +141,7 @@ def autolink(html_str, self_path, max_links=9):
         out.append(text)
     return "".join(out)
 
-def sources_box(items, updated="October 22, 2026"):
+def sources_box(items, updated="October 29, 2026"):
     if not items:
         return ""
     lis = "".join(f'<li><a href="{u}" rel="noopener" target="_blank">{label}</a></li>' for label, u in items)

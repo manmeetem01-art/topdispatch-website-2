@@ -15,3 +15,10 @@
 - Industry pages: trade-specific service cards instead of the same six on every page. Footer logo alt text.
 - CRITICAL still open: topdispatchcrm.com serves the Base44 CRM, while every page canonical points there. Owner must either move the CRM to a subdomain and point the root domain to Vercel, or choose a different domain.
 - Next: "Best answering service for HVAC companies (2026)" comparison guide; city pages.
+
+## 2026-10-29: Audit + indexing fix (Option B)
+- Audit: site not indexed (site: search returns nothing). Cause: canonicals and sitemap pointed to topdispatchcrm.com, which still serves the Base44 site.
+- Switched canonical host to https://topdispatch-website-2.vercel.app (DOMAIN in _src/content.py). Sitemap, robots, llms.txt, OG and schema follow it. When topdispatchcrm.com moves to Vercel: change DOMAIN back, rebuild, add vercel.app -> domain redirect.
+- Rewrote copy duplicated from the Base44 site (hero lead, Who We Are on home and About, Why Philippines cards, steps, values, team bios, pricing list).
+- Expanded thin pages: About (+how we work), How It Works (+matching, access, after go-live), Why Philippines (+time zone table, concerns), AI vs human guide (+call table, test questions, FCC note, decision guide), hire guide (+cost table, red flags, 30-day scorecard).
+- Still open (owner): contact form endpoint empty (leads only via mailto), reviews need verification, Cowork daily task not running, Search Console submission.

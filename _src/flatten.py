@@ -1,11 +1,12 @@
 import os,re,json,shutil
-import pathlib
+import pathlib, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 HERE=pathlib.Path(__file__).resolve().parent
-SRC=str(HERE/"_site"); OUT=str(HERE.parent); D="https://topdispatchcrm.com"
+SRC=str(HERE/"_site"); OUT=str(HERE.parent); D=__import__("content").DOMAIN
 
 def fix(t):
     t=t.replace('"/assets/','"/').replace(D+"/assets/",D+"/")
-    t=re.sub(r'(https://topdispatchcrm\.com|href=")(/[a-z0-9][a-z0-9\-/]*?)/(?=["#\s\)<\]])',r'\1\2',t)
+    t=re.sub(r'('+re.escape(D)+r'|href=")(/[a-z0-9][a-z0-9\-/]*?)/(?=["#\s\)<\]])',r'\1\2',t)
     return t
 rew=[]; pages=[]
 for d,_,fs in os.walk(SRC):
@@ -23,10 +24,10 @@ for f in ["favicon.ico","robots.txt"]: shutil.copy(f"{SRC}/{f}",f"{OUT}/{f}")
 open(OUT+"/site.webmanifest","w").write(open(SRC+"/site.webmanifest").read().replace('"/assets/','"/'))
 open(OUT+"/llms.txt","w").write(fix(open(SRC+"/llms.txt").read()).replace(D+"/)",D+"/)"))
 # llms has markdown links (url) -> fix trailing slash
-t=open(OUT+"/llms.txt").read(); t=re.sub(r'(https://topdispatchcrm\.com/[a-z0-9\-/]+?)/\)',r'\1)',t); open(OUT+"/llms.txt","w").write(t)
+t=open(OUT+"/llms.txt").read(); t=re.sub(r'('+re.escape(D)+r'/[a-z0-9\-/]+?)/\)',r'\1)',t); open(OUT+"/llms.txt","w").write(t)
 pages.sort(key=lambda u:(u!="/",u))
 pri=lambda u:"1.0" if u=="/" else "0.8"
-open(OUT+"/sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{D}{'' if u=='/' else u}{'/' if u=='/' else ''}</loc><lastmod>2026-10-20</lastmod><priority>{pri(u)}</priority></url>" for u in pages)+"</urlset>\n")
+open(OUT+"/sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{D}{'' if u=='/' else u}{'/' if u=='/' else ''}</loc><lastmod>2026-10-29</lastmod><priority>{pri(u)}</priority></url>" for u in pages)+"</urlset>\n")
 old=[("/ServicesPage","/services"),("/AboutPage","/about"),("/ReviewsPage","/reviews"),("/FAQPage","/faq"),("/IndustriesPage","/industries"),("/ContactPage","/contact")]
 cfg={"cleanUrls":True,"trailingSlash":False,"rewrites":rew,
  "redirects":[{"source":a,"destination":b,"permanent":True} for a,b in old],
