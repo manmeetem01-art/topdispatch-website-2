@@ -57,16 +57,21 @@
       data.forEach(function (v, k) { if (k !== 'company_website') payload[k] = v; });
       payload.page = window.location.href;
       fetch(endpoint, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'application/json', Accept: 'application/json' } })
-        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
         .then(function (res) {
-          if (!res.ok || String(res.j && res.j.success) === 'false') throw new Error();
+          if (!res.ok || String(res.j && res.j.success) === 'false') { if (window.console) console.warn('Form endpoint:', res.j && res.j.message); throw new Error(); }
           form.reset();
           status.className = 'form-status ok';
           status.textContent = 'Details sent. Our team will contact you within a few hours.';
         })
         .catch(function () {
-          status.className = 'form-status err';
-          status.textContent = 'Your details did not send. Call (833) 505-4136 or email support@topdispatchcrm.com.';
+          // Fallback so no lead is lost: open the visitor's email app with the details filled in.
+          var body = 'Name: ' + data.get('name') + '\nEmail: ' + data.get('email') + '\nPhone: ' + data.get('phone') +
+            '\nTrade: ' + (data.get('trade') || '') + '\n\n' + (data.get('message') || '');
+          status.className = 'form-status ok';
+          status.textContent = 'Opening your email app with your details. Press send and we will reply within a few hours, or call (833) 505-4136.';
+          window.location.href = 'mailto:manmeetsingh0177@gmail.com?subject=' +
+            encodeURIComponent('New lead from website: ' + data.get('name')) + '&body=' + encodeURIComponent(body);
         })
         .finally(function () { b.disabled = false; });
     });
