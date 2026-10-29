@@ -27,3 +27,9 @@
 - Live domain is now https://www.topdispatchusa.com (owner connected it in Vercel). Canonicals, sitemap, robots, llms.txt, OG and schema switched to it.
 - vercel.json: 301 redirect from topdispatch-website-2.vercel.app to www.topdispatchusa.com.
 - Next: Search Console property in the revealrank Google account, verify, submit sitemap, request indexing for money pages.
+
+## 2026-10-29: Search Console live
+- Property https://www.topdispatchusa.com/ (URL prefix) added in the revealrank Google account (Chrome authuser=1, same account as revealrank.com / alhomeservices.us). Verified via HTML meta tag in <head> (keep the tag).
+- sitemap.xml submitted: success, 40 pages discovered.
+- Indexing requested (priority crawl queue): /, /call-center-services, /answering-service, /services/virtual-receptionist, /services/dispatch, /industries/hvac-answering-service, /industries/plumbing-answering-service, /pricing.
+- Next indexing batch (daily quota ~10): remaining services, industries, guides, about, why-the-philippines.
